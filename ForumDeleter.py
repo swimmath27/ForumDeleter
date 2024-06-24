@@ -38,6 +38,10 @@ async def monitor_inactive_posts():
     now = datetime.now(timezone.utc)
 
     for thread in forum_channel.threads:
+        # skip any pinned posts
+        if thread.flags.pinned:
+          continue 
+        
         # Get the last message in the thread
         last_message = await thread.fetch_message(thread.last_message_id)
         if last_message is None:
