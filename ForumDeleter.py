@@ -37,10 +37,7 @@ async def monitor_inactive_posts():
 
     now = datetime.now(timezone.utc)
 
-    active_threads = await guild.active_threads()
-    for thread in active_threads:
-        if thread.parent_id != FORUM_CHANNEL_ID:
-          continue
+    for thread in forum_channel.threads:
         # Get the last message in the thread
         last_message = await thread.fetch_message(thread.last_message_id)
         if last_message is None:
